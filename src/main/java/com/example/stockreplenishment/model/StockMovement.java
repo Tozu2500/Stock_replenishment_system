@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 @Table(name = "stock_movements")
 @EntityListeners(AuditingEntityListener.class)
 public class StockMovement extends BaseEntity {
+    
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
     private Product product;
