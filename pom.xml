@@ -12,7 +12,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>stock-replenishment-system</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Stock Replenishment System</name>
     <description>Inventory, purchase order and stock replenishment management</description>
 
