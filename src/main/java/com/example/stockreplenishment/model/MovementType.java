@@ -7,6 +7,7 @@ public enum MovementType {
     RETURN,
     ADJUSTMENT;
 
+    // Turns the quantity a user typed into a signed stock change: sales remove stock
     public int toChange(int quantity) {
         return switch (this) {
             case RECEIPT, RETURN -> Math.abs(quantity);
