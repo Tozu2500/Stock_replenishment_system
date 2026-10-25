@@ -1,0 +1,10 @@
+# Build output
+target/
+
+# Local secrets (DB_USERNAME, DB_PASSWORD, ...)
+.env
+
+# IDE files
+.vscode/
+.idea/
+*.iml
