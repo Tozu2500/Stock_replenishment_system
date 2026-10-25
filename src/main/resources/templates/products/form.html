@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Product</h1>
+    <form class="card form" th:object="${product}" method="post" novalidate
+          th:action="${productId == null} ? @{/products} : @{/products/{id}(id=${productId})}">
+        <label>Name <input th:field="*{name}"></label> <span th:errors="*{name}"></span>
+        <label>SKU <input th:field="*{sku}"></label> <span th:errors="*{sku}"></span>
+        <label>Unit price (€) <input th:field="*{unitPrice}"></label> <span th:errors="*{unitPrice}"></span>
+        <label>Minimum stock <input th:field="*{minimumStock}"></label> <span th:errors="*{minimumStock}"></span>
+        <label>Target stock <input th:field="*{targetStock}"></label> <span th:errors="*{targetStock}"></span>
+        <span th:errors="*{stockLevelsValid}"></span>
+        <label>Category
+            <select th:field="*{categoryId}">
+                <option value="">Choose...</option>
+                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+            </select></label> <span th:errors="*{categoryId}"></span>
+        <p>Suppliers:
+            <label class="inline" th:each="s : ${suppliers}">
+                <input type="checkbox" th:field="*{supplierIds}" th:value="${s.id}"> <span th:text="${s.name}"></span></label></p>
+        <p><label class="inline"><input type="checkbox" th:field="*{active}"> Active</label></p>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</main>
+</html>

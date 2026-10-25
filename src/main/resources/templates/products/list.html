@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Products</h1>
+    <form class="filters" th:action="@{/products}" method="get">
+        <select name="categoryId">
+            <option value="">All categories</option>
+            <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}" th:selected="${c.id == categoryId}"></option>
+        </select>
+        <button class="btn">Filter</button>
+        <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/products/new}">New product</a>
+    </form>
+    <table class="card">
+        <tr><th>Name</th><th>SKU</th><th>Category</th><th class="num">Price</th><th class="num">In stock</th><th>Status</th></tr>
+        <tr th:each="p : ${products}">
+            <td><a th:href="@{/products/{id}(id=${p.id})}" th:text="${p.name}"></a></td>
+            <td th:text="${p.sku}"></td>
+            <td th:text="${p.category.name}"></td>
+            <td class="num" th:text="${p.unitPrice} + ' €'"></td>
+            <td class="num" th:text="${p.quantity}"></td>
+            <td><span th:class="${p.status}" th:text="${p.active} ? ${p.status} : 'INACTIVE'"></span></td>
+        </tr>
+    </table>
+</main>
+</html>

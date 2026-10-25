@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Suppliers</h1>
+    <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/suppliers/new}">New supplier</a>
+    <table class="card">
+        <tr><th>Name</th><th>Email</th><th class="num">Lead time (days)</th><th class="num">Products</th><th>Active</th><th></th></tr>
+        <tr th:each="s : ${suppliers}">
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.email}"></td>
+            <td class="num" th:text="${s.leadTimeDays}"></td>
+            <td class="num" th:text="${s.products.size()}"></td>
+            <td th:text="${s.active} ? 'Yes' : 'No'"></td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a class="btn btn-small" th:href="@{/suppliers/{id}/edit(id=${s.id})}">Edit</a>
+                <form th:action="@{/suppliers/{id}/delete(id=${s.id})}" method="post">
+                    <button class="btn btn-small btn-danger" onclick="return confirm('Delete?')">Delete</button></form>
+            </td>
+        </tr>
+    </table>
+</main>
+</html>

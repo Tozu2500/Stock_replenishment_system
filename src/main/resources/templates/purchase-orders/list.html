@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Purchase orders</h1>
+    <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/purchase-orders/new}">New purchase order</a>
+    <table class="card">
+        <tr><th>Order</th><th>Supplier</th><th>Ordered</th><th>Expected</th><th class="num">Total</th><th>Status</th></tr>
+        <tr th:each="o : ${orders}">
+            <td><a th:href="@{/purchase-orders/{id}(id=${o.id})}" th:text="${o.orderNumber}"></a></td>
+            <td th:text="${o.supplier.name}"></td>
+            <td th:text="${o.orderDate}"></td>
+            <td th:text="${o.expectedDeliveryDate}"></td>
+            <td class="num" th:text="${o.total} + ' €'"></td>
+            <td><span th:class="${o.status}" th:text="${o.status}"></span></td>
+        </tr>
+    </table>
+</main>
+</html>

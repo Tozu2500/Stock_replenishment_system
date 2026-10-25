@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Supplier</h1>
+    <form class="card form" th:object="${supplier}" method="post" novalidate
+          th:action="${supplierId == null} ? @{/suppliers} : @{/suppliers/{id}(id=${supplierId})}">
+        <label>Name <input th:field="*{name}"></label> <span th:errors="*{name}"></span>
+        <label>Email <input th:field="*{email}"></label> <span th:errors="*{email}"></span>
+        <label>Lead time (days) <input th:field="*{leadTimeDays}"></label> <span th:errors="*{leadTimeDays}"></span>
+        <p><label class="inline"><input type="checkbox" th:field="*{active}"> Active (can receive new orders)</label></p>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</main>
+</html>

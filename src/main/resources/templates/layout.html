@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- Shared page layout: every page replaces its <html> with this one and passes in its <main> element. -->
+<html lang="en" th:fragment="page(content)" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>StockFlow</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header sec:authorize="isAuthenticated()">
+    <a class="brand" th:href="@{/}">StockFlow</a>
+    <nav>
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/products}">Products</a>
+        <a th:href="@{/purchase-orders}">Purchase orders</a>
+        <a th:href="@{/categories}">Categories</a>
+        <a th:href="@{/suppliers}">Suppliers</a>
+    </nav>
+    <form th:action="@{/logout}" method="post">
+        <span sec:authentication="name">user</span>
+        <button class="btn btn-small">Log out</button>
+    </form>
+</header>
+<div class="alert success" th:if="${success}" th:text="${success}"></div>
+<div class="alert error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+<main th:replace="${content}"></main>
+</body>
+</html>

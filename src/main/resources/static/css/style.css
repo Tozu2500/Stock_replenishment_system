@@ -1,0 +1,278 @@
+/* Theme colours */
+:root {
+    --bg: #f3f5f8;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e2e6ec;
+    --primary: #2563eb;
+    --danger: #dc2626;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font: 15px/1.45 system-ui, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+h1 {
+    margin: 0 0 16px;
+    font-size: 26px;
+}
+
+h2 {
+    margin: 0 0 12px;
+    font-size: 17px;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+/* Layout */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+    padding: 10px 24px;
+    background: #172033;
+    color: #cbd5e1;
+}
+
+header nav {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    gap: 4px;
+}
+
+header nav a {
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: #cbd5e1;
+}
+
+header nav a:hover {
+    color: #fff;
+    background: var(--primary);
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.actions, .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filters input, .filters select {
+    width: auto;
+    min-width: 180px;
+}
+
+.card {
+    display: block;
+    margin: 16px 0;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 0 20px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0 14px;
+}
+
+.stats .card {
+    margin: 0 0 16px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.stats b {
+    display: block;
+    font-size: 26px;
+    color: var(--text);
+}
+
+/* Tables, details and statuses (the class names are the enum values) */
+table.card {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    padding: 0;
+}
+
+th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.num {
+    text-align: right;
+}
+
+td form, .actions form {
+    display: inline;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 8px 16px;
+}
+
+dt {
+    color: var(--muted);
+}
+
+dd {
+    margin: 0;
+}
+
+.IN_STOCK, .LOW_STOCK, .OUT_OF_STOCK, .PENDING, .ORDERED, .RECEIVED, .CANCELLED {
+    padding: 2px 9px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.IN_STOCK, .RECEIVED {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.LOW_STOCK, .PENDING {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+.OUT_OF_STOCK, .CANCELLED {
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+.ORDERED {
+    color: #1e40af;
+    background: #dbeafe;
+}
+
+/* Buttons and forms */
+.btn {
+    display: inline-block;
+    padding: 7px 14px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--text);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: #fff;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-danger {
+    color: var(--danger);
+    border-color: #fecaca;
+}
+
+.btn-small {
+    padding: 3px 10px;
+    font-size: 13px;
+}
+
+.form {
+    max-width: 600px;
+}
+
+.form label {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.form label.inline {
+    display: inline;
+    margin-right: 12px;
+    font-weight: normal;
+}
+
+.form > span {
+    display: block;
+    font-size: 13px;
+    color: var(--danger);
+}
+
+.form button {
+    margin-top: 16px;
+}
+
+input:not([type=checkbox]), select {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px 10px;
+    font: inherit;
+    border: 1px solid #cfd5dd;
+    border-radius: 6px;
+}
+
+.alert {
+    max-width: 1152px;
+    margin: 16px auto 0;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.alert.success {
+    color: #166534;
+    background: #f0fdf4;
+}
+
+.alert.error {
+    color: #991b1b;
+    background: #fef2f2;
+}

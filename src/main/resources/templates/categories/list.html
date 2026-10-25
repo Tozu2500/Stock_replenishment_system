@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Categories</h1>
+    <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/categories/new}">New category</a>
+    <table class="card">
+        <tr><th>Name</th><th class="num">Products</th><th></th></tr>
+        <tr th:each="c : ${categories}">
+            <td><a th:href="@{/products(categoryId=${c.id})}" th:text="${c.name}"></a></td>
+            <td class="num" th:text="${c.products.size()}"></td>
+            <td sec:authorize="hasRole('ADMIN')">
+                <a class="btn btn-small" th:href="@{/categories/{id}/edit(id=${c.id})}">Edit</a>
+                <form th:action="@{/categories/{id}/delete(id=${c.id})}" method="post">
+                    <button class="btn btn-small btn-danger" onclick="return confirm('Delete?')">Delete</button></form>
+            </td>
+        </tr>
+    </table>
+</main>
+</html>

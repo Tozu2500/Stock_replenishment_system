@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1 th:text="${product.name} + ' (' + ${product.sku} + ')'"></h1>
+    <div class="actions" sec:authorize="hasRole('ADMIN')">
+        <a class="btn" th:href="@{/products/{id}/edit(id=${product.id})}">Edit</a>
+        <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post">
+            <button class="btn btn-danger" onclick="return confirm('Delete permanently?')">Delete</button></form>
+    </div>
+    <div class="grid-2">
+        <dl class="card">
+            <dt>In stock</dt><dd><span th:class="${product.status}" th:text="${product.quantity}"></span></dd>
+            <dt>Minimum / target</dt><dd th:text="${product.minimumStock} + ' / ' + ${product.targetStock}"></dd>
+            <dt>Unit price</dt><dd th:text="${product.unitPrice} + ' €'"></dd>
+            <dt>Stock value</dt><dd th:text="${product.stockValue} + ' €'"></dd>
+            <dt>Category</dt><dd th:text="${product.category.name}"></dd>
+            <dt>Suppliers</dt><dd><div th:each="s : ${product.suppliers}" th:text="${s.name}"></div></dd>
+            <dt>Active</dt><dd th:text="${product.active} ? 'Yes' : 'No'"></dd>
+        </dl>
+        <form class="card form" sec:authorize="hasRole('ADMIN')" th:object="${movement}" method="post" novalidate
+              th:action="@{/products/{id}/movements(id=${product.id})}">
+            <h2>Record a stock change</h2>
+            <label>Type <select th:field="*{type}">
+                <option th:each="t : ${movementTypes}" th:value="${t}" th:text="${t}"></option></select></label>
+            <label>Quantity (a sale is subtracted, an adjustment may be negative) <input th:field="*{quantity}"></label>
+            <span th:errors="*{quantity}"></span>
+            <label>Reason <input th:field="*{reason}"></label>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+    <h2>Stock movements</h2>
+    <table class="card">
+        <tr><th>When</th><th>Type</th><th class="num">Change</th><th>Reason</th><th>By</th></tr>
+        <tr th:each="m : ${product.movements}">
+            <td th:text="${#temporals.format(m.createdAt, 'd.M.yyyy HH:mm')}"></td>
+            <td th:text="${m.type}"></td>
+            <td class="num" th:text="${m.quantity}"></td>
+            <td th:text="${m.reason}"></td>
+            <td th:text="${m.createdBy}"></td>
+        </tr>
+    </table>
+</main>
+</html>

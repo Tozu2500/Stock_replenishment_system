@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: page(~{::main})}">
+<main>
+    <h1>Dashboard</h1>
+    <div class="stats">
+        <div class="card">Products <b th:text="${productCount}"></b></div>
+        <div class="card">Low stock <b th:text="${lowStock}"></b></div>
+        <div class="card">Out of stock <b th:text="${outOfStock}"></b></div>
+        <div class="card">Inventory value <b th:text="${stockValue} + ' €'"></b></div>
+    </div>
+    <section class="card">
+        <h2>Needs replenishment</h2>
+        <p class="muted">Stock on hand + on order has fallen to the minimum level. The recommended quantity brings it
+            back up to the target level from the active supplier with the shortest lead time.</p>
+        <table>
+            <tr><th>Product</th><th>Status</th><th class="num">On hand</th><th class="num">On order</th>
+                <th class="num">Target</th><th class="num">Recommended</th><th>Supplier</th><th></th></tr>
+            <tr th:each="s : ${suggestions}">
+                <td><a th:href="@{/products/{id}(id=${s.product.id})}" th:text="${s.product.name}"></a></td>
+                <td><span th:class="${s.product.status}" th:text="${s.product.status}"></span></td>
+                <td class="num" th:text="${s.product.quantity}"></td>
+                <td class="num" th:text="${s.onOrder}"></td>
+                <td class="num" th:text="${s.product.targetStock}"></td>
+                <td class="num" th:text="${s.recommendedQuantity}"></td>
+                <td th:text="${s.supplier != null} ? ${s.supplier.name} : 'No active supplier'"></td>
+                <td><form sec:authorize="hasRole('ADMIN')" th:if="${s.supplier != null}" method="post"
+                          th:action="@{/purchase-orders/replenish/{id}(id=${s.product.id})}">
+                    <button class="btn btn-small btn-primary">Order</button></form></td>
+            </tr>
+        </table>
+        <p th:if="${suggestions.empty}">Nothing needs to be ordered.</p>
+    </section>
+</main>
+</html>
