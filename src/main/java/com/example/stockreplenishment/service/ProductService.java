@@ -77,6 +77,7 @@ public class ProductService {
             throw new InvalidOperationException(product.getName()
                     + " appears on purchase orders. Deactivate it instead of deleting it.");
         }
+        product.getCategory().getProducts().remove(product);
         productRepository.delete(product);
     }
 

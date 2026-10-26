@@ -41,6 +41,18 @@ class ProductServiceTest {
     }
 
     @Test
+    void movingProductUpdatesBothCategories() {
+        Category office = new Category("Office Supplies");
+        Product product = new Product("Keyboard", "KB-1", BigDecimal.TEN, 1, 5, category);
+        assertThat(category.getProducts()).containsExactly(product);
+
+        product.setCategory(office);
+
+        assertThat(category.getProducts()).isEmpty();
+        assertThat(office.getProducts()).containsExactly(product);
+    }
+
+    @Test
     void rejectsDuplicateSku() {
         Product existing = new Product("Old keyboard", "KB-1", BigDecimal.TEN, 1, 5, category);
         ReflectionTestUtils.setField(existing, "id", 7L);

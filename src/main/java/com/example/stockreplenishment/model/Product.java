@@ -61,7 +61,7 @@ public class Product extends BaseEntity {
         this.unitPrice = unitPrice;
         this.minimumStock = minimumStock;
         this.targetStock = targetStock;
-        this.category = category;
+        setCategory(category);
     }
 
     public StockStatus getStatus() {
@@ -132,8 +132,18 @@ public class Product extends BaseEntity {
         return category;
     }
 
+    // Keeps both sides in sync, so category.getProducts() is correct without reloading the category
     public void setCategory(Category category) {
+        if (this.category == category) {
+            return;
+        }
+        if (this.category != null) {
+            this.category.getProducts().remove(this);
+        }
         this.category = category;
+        if (category != null) {
+            category.getProducts().add(this);
+        }
     }
 
     public Set<Supplier> getSuppliers() {
